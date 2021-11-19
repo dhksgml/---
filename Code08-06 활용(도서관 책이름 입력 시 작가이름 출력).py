@@ -81,20 +81,18 @@ print('작가-책 이름 트리 구성 완료!')
 
 while True:
     print()
-    menu = int(input("메뉴선택: 책이름 검색(1), 작가이름 검색(2), exit(3) -->"))
+    menu = int(input("메뉴선택: 책이름 검색(1), 작가이름 검색(2), 데이터 추가(3), 데이터 삭제(4), exit(5) -->"))
 
-    if menu == 3:
+    if menu == 5:
         break
 
+    #책-작가 검색
     if menu == 1:
 
         findName = input('검색할 책이름-->')
 
         root = rootBook
-        current = root
-
-        
-        
+        current = root   
         while True:
             if findName == current.data[0]:
                 
@@ -114,15 +112,13 @@ while True:
                     break
                 current = current.right
 
+    #작가-책 검색
     if menu == 2:
 
         findName = input('검색할 작가이름-->')
 
         root = rootAuth
         current = root
-
-        
-
         while True:
             if findName == current.data[1]:
                 
@@ -142,4 +138,136 @@ while True:
                     break
                 current = current.right
 
+    #데이터 추가
+    if menu == 3:
+        addBook = input('추가할 책이름:')
+        addAuth = input('추가할 작가이름:')
+        addData = [addBook,addAuth]
 
+        node = TreeNode()
+        node.data = addData
+
+        current = rootBook
+        while True:
+            if addData[0] == current.data[0]:
+                print('이미 데이터가 있습니다.')
+                break
+            else:
+                if addData[0] < current.data[0]:
+                    if current.left == None:
+                        current.left = node
+                        break
+                    current = current.left
+
+                else:
+                    if current.right == None:
+                        current.right = node
+                        break
+                    current = current.right
+                memory.append(node)
+
+        current = rootAuth
+        while True:
+            if addData[1] == current.data[1]:
+                
+                break
+            else:
+                if addData[1] < current.data[1]:
+                    if current.left == None:
+                        current.left = node
+                        break
+                    current = current.left
+
+                else:
+                    if current.right == None:
+                        current.right = node
+                        break
+                    current = current.right
+            memory.append(node)
+
+    #데이터 삭제
+    if menu == 4:
+        deleteBook = input('삭제할 책이름:')
+        deleteAuth = input('삭제할 작가이름:')
+        deleteData = [deleteBook,deleteAuth]
+
+        current = rootBook
+        parent = None
+
+        while True:
+            if deleteData[0] == current.data[0]:
+                if current.left == None and current.right == None:
+                    if parent.left == current:
+                        parent.left = None
+                    else:
+                        parent.right = None
+                    del(current)
+
+                elif current. left != None and current.right == None:
+                    if parent.left == current:
+                        parent.left = current.left
+                    else:
+                        parent.right = current.left
+                    del(current)
+
+                elif current.left == None and current.right != None:
+                    if parent.left == current:
+                        parent.left = current.right
+                    else:
+                        parent.right = current.right
+                    del(current)
+                print(deleteData,'이(가) 삭제됨.')
+                break
+            elif deleteData[0] < current.data[0]:
+                if current.left == None:
+                    print(deleteData, '이(가) 트리에 없음')
+                    break
+                parent = current
+                current = current.left
+            else:
+                if current.right == None:
+                    print(deleteData, '이(가) 트리에 없음')
+                    break
+                parent = current
+                current = current.right
+
+
+        current = rootAuth
+        parent = None
+
+        while True:
+            if deleteData[1] == current.data[1]:
+                if current.left == None and current.right == None:
+                    if parent.left == current:
+                        parent.left = None
+                    else:
+                        parent.right = None
+                    del(current)
+
+                elif current. left != None and current.right == None:
+                    if parent.left == current:
+                        parent.left = current.left
+                    else:
+                        parent.right = current.left
+                    del(current)
+
+                elif current.left == None and current.right != None:
+                    if parent.left == current:
+                        parent.left = current.right
+                    else:
+                        parent.right = current.right
+                    del(current)
+                break
+            elif deleteData[1] < current.data[1]:
+                if current.left == None:
+                    
+                    break
+                parent = current
+                current = current.left
+            else:
+                if current.right == None:
+                    
+                    break
+                parent = current
+                current = current.right
+        
